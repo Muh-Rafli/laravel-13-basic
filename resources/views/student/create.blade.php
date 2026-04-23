@@ -1,7 +1,7 @@
 <x-app>
         <x-slot:title>{{ $title }}</x-slot>
 
-   <form method="POST" action="{{ route('student.store') }}">
+  <form method="POST" action="{{ route('student.store') }}">
     @csrf
   
   <div class="mb-3">
@@ -14,12 +14,12 @@
   <div class="mb-3">
     <label for="nim" class="form-label">Nim</label>
     <input type="number" class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim" value="{{ old('nim') }}">
-     @error('nim')
+    @error('nim')
     <div class="invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
 
-   <a class="btn btn-warning" href="{{ route('student.index') }}" role="button">Cancel</a>
+  <a class="btn btn-warning" href="{{ route('student.index') }}" role="button">Cancel</a>
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

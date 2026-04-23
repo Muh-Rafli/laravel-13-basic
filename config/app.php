@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_TIEMZONE', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIEMZONE', 'Asia/Makassar'),
+    'timezone' => env('APP_TIMEbZONE', 'Asia/Makassar'),
 
     /*
     |--------------------------------------------------------------------------
