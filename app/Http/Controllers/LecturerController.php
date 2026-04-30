@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Lecturer;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,8 @@ class LecturerController extends Controller
     {
         return view('lecturer.index', [
             'title' => 'lecturer',
-            'lecturers'=> Lecturer::latest()->get(),
-            //'students'=> student::orderBy('name', 'asc')->get(),
+            'lecturers'=> Lecturer::with('department')->latest()->get(),
+            //'lecturers'=> lecturer::orderBy('name', 'asc')->get(),
             ]);
     }
 
@@ -24,15 +25,31 @@ class LecturerController extends Controller
      */
     public function create()
     {
-        //
+        return view('lecturer.create', [
+            'title' => 'create lecturer',
+            'departments'=> Department::latest()->get(),
+            //'lecturers'=> lecturer::orderBy('name', 'asc')->get(),
+            ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+        'name' => 'required|max:255',
+        'department_id' => 'required|exists:departments,id',
+    ],[
+        'name.required'=> 'Nama tidak boleh kosong',
+        'name.max'=> 'Nama maksimal 255 karakter',
+        'department_id.required'=> 'Program Studi tidak boleh kosong',
+        'department_id.exists'=> 'Program Studi yang dipilih tidak ditemukan',
+    ]);
+ 
+    lecturer ::create($validated);
+
+    return to_route('lecturer.index')->withSuccess('Data Berhasil ditambahkan');
     }
 
     /**
@@ -48,7 +65,12 @@ class LecturerController extends Controller
      */
     public function edit(Lecturer $lecturer)
     {
-        //
+         return view('lecturer.edit', [
+            'title' => 'edit lecturer',
+            'departments'=> Department::latest()->get(),
+            'lecturer' => $lecturer,
+            //'lecturers'=> lecturer::orderBy('name', 'asc')->get(),
+            ]);
     }
 
     /**
@@ -56,7 +78,19 @@ class LecturerController extends Controller
      */
     public function update(Request $request, Lecturer $lecturer)
     {
-        //
+        $validated = $request->validate([
+        'name' => 'required|max:255',
+        'department_id' => 'required|exists:departments,id',
+    ],[
+        'name.required'=> 'Nama tidak boleh kosong',
+        'name.max'=> 'Nama maksimal 255 karakter',
+        'department_id.required'=> 'Program Studi tidak boleh kosong',
+        'department_id.exists'=> 'Program Studi yang dipilih tidak ditemukan',
+    ]);
+ 
+    $lecturer->update($validated);
+
+    return to_route('lecturer.index')->withSuccess('Data Berhasil diubah');
     }
 
     /**
@@ -64,6 +98,6 @@ class LecturerController extends Controller
      */
     public function destroy(Lecturer $lecturer)
     {
-        //
+        return to_route('lecturer.index')->withSuccess('Data Berhasil dihapus');
     }
 }
