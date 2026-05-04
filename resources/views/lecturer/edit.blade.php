@@ -16,7 +16,7 @@
   <div class="mb-3">
     <label for="department_id" class="form-label">Department</label>
 
-    <select class="form-select" @error('department_id') is-invalid @enderror 
+    <select class="form-select @error('department_id') is-invalid @enderror" 
     id="department_id" 
         name="department_id">
         <option value="">Choose Department</option>
