@@ -10,7 +10,7 @@
 
         <a class="btn btn-primary mb-3" href="{{ route('lecturer.create') }}" role="button">Create</a>
 
-        <form action="">
+        <form action="{{ route('lecturer.index')}}" method="GET">
 
         <div class="row g-3 mb-3">
             <div class="col-md-4">
